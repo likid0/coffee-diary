@@ -15,3 +15,7 @@ tasting_profile: "Chicle de Fresa, Limón, Té frío de melocotón, Cacao"
 High-altitude natural Catuai. Prominent fermented fruit character — tea-peach,
 strawberry gum, cold peach tea. The fruit expression is dose-sensitive: at 9g it
 shines, at 18g it gets buried under body and structure.
+
+## Method Note
+
+Filter only. The fermented fruit profile does not translate to espresso — use V60 only.
