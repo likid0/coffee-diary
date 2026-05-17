@@ -11,23 +11,19 @@ ratio: "1:2"
 grind_clicks: 19
 extraction_time_s: 28
 pre_infusion: ~
-result: dialed-in
+result: not-optimal
 ---
 
 ## Tasting
 
-Cacao nibs, chocolate, cherry, hazelnut finish. Medium acidity, silky body.
-Clean extraction, no bitterness, no sourness. Exactly what the label promised.
+Initial result seemed acceptable but subsequent pulls revealed grind 19 was too coarse.
 
 ## Dial-in path
 
 - Grind 13 — complete choke, no flow ❌
 - Grind 16, 20g in / 20g out / 45s — severely over-extracted, still choking ❌
-- Grind 19, 20g in / 40g out / 28s — dialled in ✅
-
-Bean density much higher than expected. Required grind 19 vs typical 13 reference.
-Cerrado Mineiro altitude and Catuaí variety likely driving the dense puck.
+- Grind 19, 20g in / 40g out / 28s — appeared dialled in but not the sweet spot ⚠️
 
 ## Next
 
-Grind 19 / 20g as reference for this bag. Finish by ~2026-05-20.
+Dialled back to 15-16 — see follow-up session.
