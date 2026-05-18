@@ -8,6 +8,7 @@ altitude_masl: 900-1000
 producer: Multi-farm blend
 roast_date: 2026-04-27
 sca_score: 82
+bag_finished: 2026-05-13
 ---
 
 ## Notes

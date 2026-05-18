@@ -8,6 +8,7 @@ altitude_masl: 1000
 producer: ~
 roast_date: 2026-04-27
 sca_score: 84
+bag_finished: 2026-05-13
 ---
 
 ## Notes

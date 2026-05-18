@@ -9,6 +9,7 @@ producer: Renato Duzzi
 roaster: Café Uchero
 roast_date: 2026-04-27
 sca_score: ~
+bag_finished: 2026-05-13
 tags: [everyday-espresso]
 ---
 

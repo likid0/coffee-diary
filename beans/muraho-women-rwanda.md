@@ -7,6 +7,7 @@ variety: Red Bourbon
 altitude_masl: 1500-1800
 producer: Womenfles Extension
 roast_date: 2026-03-23
+bag_finished: 2026-05-13
 ---
 
 ## Notes
