@@ -8,19 +8,25 @@ method: V60
 dose_g: 18
 water_ml: 288
 ratio: "1:16"
-temp_c: 92
+temp_c: 94
 bloom_ml: 50
-bloom_time_s: 60
+bloom_time_s: 45
 grind_clicks: 60
-extraction_time: ~
-result: resting
+pours: 4
+extraction_time: "3:35"
+result: too-fresh
 ---
 
-## Notes
+## Tasting
 
-Too early — V60 started at day 5. Plan: grind 60 clicks, 92°C.
-Espresso window opens ~2026-05-18.
+Clean, no harshness. Muted fruit at finish only — no florals, no acidity, no complexity.
+Too fresh at 5 days. The cup is technically correct but aromatics simply not there yet.
+
+## Dial-in path
+
+- Grind 60, 94°C, 45s bloom, 4 pours, 3:35 drawdown — muted, too fresh ❌
 
 ## Next
 
-Continue V60 as aromatics develop. Log tasting results once the cup opens up.
+Wait until day 12-14 (~2026-05-20). Try 92°C — lower temp to preserve delicate florals
+when aromatics do open up. Same grind and dose as baseline.
