@@ -12,13 +12,13 @@ temp_c: 93
 grind_clicks: 60
 technique: "hybrid 40/60 — bloom 50g open 45s, pour to 115g open, close switch, pour to 300g, immersion to 2:30, open → drawdown"
 target_drawdown: "3:15–3:30"
-result: pending
+result: decent-not-there
 ---
 
-## Notes
+## Tasting
 
-Switch hybrid attempt — grind down from 63 to 60, temp up from 91°C to 93°C vs attempt 1.
-Result not yet logged.
+Decent coffee. No fermentation character, no fruity flavors. Clean but flat.
+93°C not unlocking the fruit on this bean at this grind/method combination.
 
 ## Previous
 
