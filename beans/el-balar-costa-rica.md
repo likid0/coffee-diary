@@ -8,6 +8,7 @@ altitude_masl: 1800
 producer: Elian y Leo Robles
 roast_date: 2026-03-16
 tasting_profile: "Chicle de Fresa, Limón, Té frío de melocotón, Cacao"
+bag_finished: 2026-05-28
 ---
 
 ## Notes
