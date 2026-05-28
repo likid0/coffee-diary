@@ -16,8 +16,9 @@ result: promising
 
 ## Tasting
 
-Loads of fruit flavors. Strong first expression on day 9 — the Wush Wush variety
-and anaerobic process both showing up clearly.
+Loads of mango. Fruit forward and present from the first sip. No jasmine — the floral
+character the variety is known for is absent or buried at 92°C.
+Strong first expression on day 9 — the anaerobic process showing up clearly.
 
 ## Technique
 
