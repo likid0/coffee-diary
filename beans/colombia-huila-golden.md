@@ -9,6 +9,7 @@ producer: ~
 roaster: DeEspecialidad
 roast_date: 2026-05-11
 sca_score: ~
+bag_finished: 2026-05-28
 ---
 
 ## Notes
