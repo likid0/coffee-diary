@@ -9,6 +9,7 @@ producer: 250 small producers
 roaster: Nomad Coffee
 roast_date: 2026-05-07
 sca_score: ~
+bag_finished: 2026-05-28
 ---
 
 ## Notes
