@@ -2,7 +2,7 @@
 name: D.CO.DCF (Chambakú Decaf)
 origin: Colombia
 region: Chambakú
-processing: ~
+processing: Swiss Water
 variety: ~
 altitude_masl: ~
 producer: ~

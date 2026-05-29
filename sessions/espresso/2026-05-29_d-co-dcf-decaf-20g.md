@@ -1,7 +1,7 @@
 ---
 bean: D.CO.DCF (Chambakú Decaf)
 origin: Colombia
-processing: Sugar Cane Decaf
+processing: Swiss Water
 roast_date: 2026-05-07
 age_days: 22
 method: Espresso
@@ -17,7 +17,7 @@ result: fail
 ## Tasting
 
 Crazy fast extraction at grind 11. Very bad, sour/acidic — significant under-extraction.
-Decaf beans behave very differently from caffeinated — Sugar Cane process likely produces
+Decaf beans behave very differently from caffeinated — Swiss Water process produces
 a less dense bean requiring a much finer grind than expected.
 
 ## Dial-in path
