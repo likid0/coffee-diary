@@ -10,6 +10,7 @@ roaster: ella Specialty Coffee
 roast_date: 2026-05-06
 roast_type: espresso
 sca_score: 86.5
+bag_finished: 2026-06-01
 ---
 
 ## Notes
