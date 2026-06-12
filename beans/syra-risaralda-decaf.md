@@ -1,33 +1,39 @@
 ---
 name: Risaralda Decaf
 origin: Colombia
-region: Risaralda (Eje Cafetero)
-processing: Sugar Cane (Ethyl Acetate) Decaf
+region: Risaralda
+processing: "Descafeinado (process TBC — likely EA or Swiss Water)"
 variety: "Castillo, Caturra"
-altitude_masl: 1200-1900
-producer: ~
+altitude_masl: 1300-1800
+producer: Varios Productores
 roaster: Syra Coffee (Barcelona)
-roast_date: ~
-roast_type: espresso
-sca_score: ~
+roast_date: 2026-06-01
+roast_type: "espresso, filter"
+sca_score: 83.5
 weight_g: 250
-status: ordered
+status: resting
 ---
 
 ## Notes
 
-Colombian decaf from Risaralda, Eje Cafetero. Sugar Cane (EA) process — same as Nomad D.CO.DCF.
-Ethyl Acetate is naturally occurring (found in fruits), gentle process, clean result.
-Castillo/Caturra at 1,200–1,900m — similar density profile to E.CO.CHA.
-Label: chocolate, brown sugar, caramelized.
+Dual-use roast — works for both espresso and filter.
+Label: chocolate, albaricoque, azúcar moreno, caramelo.
+Washed Colombian — may extract faster than natural decafs.
 
-## vs Nomad D.CO.DCF (Sugar Cane Decaf, grind 10)
+## vs previous decafs
 
-Same decaf process, same origin style. Starting grind: 10.
-E.CO.CHA (same variety, caffeinated) dialled at grind 9 — decaf may differ slightly.
+Nomad D.CO.DCF (Sugar Cane, grind 10) — same process likely, same starting point.
+Ineffable Swiss Water Decaf (grind 11) — Swiss Water = less porous, needed slightly finer.
 
 ## Starting parameters (espresso)
 
-Grind: 10
+Grind: 10–11
 Dose: 20g in / 40g out / 27–30s
-Rest until: TBD (add roast date when bag arrives)
+Rest until: 2026-06-09 (day 8)
+
+## Starting parameters (filter)
+
+Grind: 62–63 clicks (1Zpresso Q)
+Dose: 20g / 300ml (1:15)
+Temp: 92°C
+Method: V60 or Switch hybrid

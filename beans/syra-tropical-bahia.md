@@ -1,33 +1,30 @@
 ---
 name: Tropical Bahía
-origin: Brazil
+origin: Brasil
 region: Bahía
-processing: Natural Anaerobic (in-transit fermentation)
+processing: Natural
 variety: "Catuai, Mundo Novo"
 altitude_masl: 1000-1200
-producer: ~
+producer: Familias Santos y Da Silva
 roaster: Syra Coffee (Barcelona)
-roast_date: ~
+roast_date: 2026-06-01
 roast_type: espresso
-sca_score: ~
+sca_score: 84
 weight_g: 250
-status: ordered
+status: resting
 ---
 
 ## Notes
 
-Brazilian natural from Bahía with a distinctive fermentation process — cherries transported
-~50km to the drier Caatinga biome in closed trucks, fermenting naturally for up to 24h during
-the journey. This controlled in-transit fermentation adds fruit complexity beyond a standard
-Brazilian natural.
-Label: pineapple, banana, passionfruit, wine.
+Low altitude Brazilian natural. Familias Santos y Da Silva.
+Label: almendra tostada, mora, vainilla, frutos rojos.
+Espresso roast only. Expect heavy body, low acidity, chocolate/nut base with soft fruit.
 
-Lower altitude than Ethiopians (1,000–1,200m) = less dense bean.
+Lower altitude (1,000–1,200m) = less dense than Ethiopian naturals.
+Reference: Fazenda Promissão (Brazilian Natural) dialled at grind 15–16.
 
 ## Starting parameters (espresso)
 
-Grind: 12–13
+Grind: 19–20 (low altitude, less dense — start coarse)
 Dose: 20g in / 40g out / 27–30s
-Rest until: TBD (add roast date when bag arrives)
-Expect more fruit expression than a typical Brazilian — the anaerobic fermentation adds
-tropical character not usual for this origin.
+Rest until: 2026-06-08 (day 7 minimum for espresso)

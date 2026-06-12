@@ -1,34 +1,33 @@
 ---
 name: Boku Snap Anaerobic 72h
 origin: Ethiopia
-region: Hambela Wamena, Oromia
-processing: Natural Anaerobic 72h
-variety: "JARC 74158, Heirloom Dega, Kudhume"
+region: Guji
+processing: Natural Anaeróbico 72h
+variety: Heirloom
 altitude_masl: 2350
-producer: SNAP washing station
+producer: ~
 roaster: Ineffable Coffee Roasters (Sevilla)
-roast_date: ~
+lot: "74158"
+roast_date: 2026-06-08
 roast_type: filter
 sca_score: ~
-weight_g: ~
-status: ordered
+weight_g: 250
+status: resting
 ---
 
 ## Notes
 
-Exceptional high-altitude Ethiopian natural anaerobic. At 2,350 masl — one of the highest
-origins in the diary. SNAP (est. 2008) ferments cherries for 72 hours in dry, shaded barrels
-under controlled conditions. JARC 74158 + Heirloom Dega/Kudhume landraces.
-Label: blueberry, floral, acai.
+High-intensity natural anaerobic from Guji at 2,350 masl — one of the highest origins in the diary.
+72h anaerobic fermentation in controlled conditions.
+Label: cereza confitada, albaricoque, gominola.
 
-Expect very intense fruit and fermentation character — more expressive than F.ET.ABEB
-(JARC 74110) and in the same direction as F.ET.HAMB but amplified by higher altitude
-and longer anaerobic fermentation (72h vs typical 48h).
+Expect intense fruit and fermentation character — more expressive than F.ET.ABEB (JARC 74110).
+High altitude + long anaerobic = needs significant rest before it opens up.
 
 ## Starting parameters (Switch hybrid / V60)
 
 Grind: 60–62 clicks (1Zpresso Q)
-Temp: 92°C — high altitude, don't overheat
+Temp: 90–92°C
 Dose: 20g / 300ml (1:15)
-Method: Switch hybrid (no-bloom 150g technique worked well for Wush Wush anaerobic)
-Rest until: TBD — minimum 12–14 days given intensity of anaerobic process
+Method: Switch hybrid
+Rest until: 2026-06-22 (day 14 minimum)
