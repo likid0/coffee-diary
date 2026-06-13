@@ -10,6 +10,7 @@ roaster: Nomad Coffee
 roast_date: 2026-05-19
 roast_type: filter
 sca_score: ~
+bag_finished: 2026-06-01
 weight_g: 250
 ---
 

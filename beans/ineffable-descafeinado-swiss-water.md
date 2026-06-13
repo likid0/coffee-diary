@@ -10,6 +10,7 @@ roaster: Ineffable Coffee Roasters (Sevilla)
 roast_date: 2026-05-21
 roast_type: espresso
 sca_score: ~
+bag_finished: 2026-06-01
 weight_g: ~
 ---
 
