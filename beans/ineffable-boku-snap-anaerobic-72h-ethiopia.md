@@ -6,13 +6,14 @@ processing: Natural Anaeróbico 72h
 variety: Heirloom
 altitude_masl: 2350
 producer: ~
-roaster: Ineffable Coffee Roasters (Sevilla)
+roaster: Ineffable Coffee Roasters
 lot: "74158"
-roast_date: 2026-06-08
-roast_type: filter
 sca_score: ~
-weight_g: 250
+roast_date: 2026-06-08
+bag_size_g: 250
+tasting_notes: Cereza confitada, albaricoque, gominola
 status: resting
+brew_methods: [filter]
 ---
 
 ## Notes
@@ -21,8 +22,8 @@ High-intensity natural anaerobic from Guji at 2,350 masl — one of the highest 
 72h anaerobic fermentation in controlled conditions.
 Label: cereza confitada, albaricoque, gominola.
 
-Expect intense fruit and fermentation character — more expressive than F.ET.ABEB (JARC 74110).
-High altitude + long anaerobic = needs significant rest before it opens up.
+Expect intense fruit and fermentation character. High altitude + long anaerobic = needs
+significant rest before it opens up.
 
 ## Starting parameters (Switch hybrid / V60)
 
