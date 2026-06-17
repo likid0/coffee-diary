@@ -23,8 +23,8 @@ At 24 days from roast — in peak window now.
 
 ## Starting parameters (V60 / filter)
 
-Grind: 64 clicks (1Zpresso Q) — 60 clicks was too fine (4:30 drawdown, over-extracted)
+Grind: 68 clicks (1Zpresso Q) — progression: 60 (4:30, bitter) → 64 (3:40, minimal fruit) → 66 (3:30, fruit emerging) → 68 (target)
 Temp: 92°C
 Dose: 20g / 300ml (1:15)
-Technique: Tetsu Kasuya 40:60
-Target drawdown: 3:15–3:20
+Technique: Tetsu Kasuya 4:6
+Target drawdown: 3:20–3:30

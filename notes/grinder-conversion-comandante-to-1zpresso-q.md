@@ -43,12 +43,13 @@ Formula: Q clicks = Comandante clicks × 2.38
 - Variety: Red Bourbon / Natural / Filter roast
 - Roast date: 2026-05-23
 - Comandante start: 27-28 clicks
-- 1Zpresso Q start: **64-67 clicks**
+- 1Zpresso Q start: **68 clicks (confirmed working point)**
 - Temp: 92°C
 - Method: V60 / 4:6 Kasuya
-- Notes: Already tested at 64 (too slow/bitter, 4:30 drawdown) and 66 (still heavy).
-  Try 68 next. Inter-pour timing: wait for bed to run dry ~45s between each pour.
-  Current pour structure: 40g / 80g / 90g / 90g (2 pours in 60% phase = lighter body).
+- Notes: Progression — 60 (4:30, heavy/bitter) → 64 (3:40, minimal fruit) → 66 (3:30,
+  fruit emerging) → 68 (3:20-3:30, target). Inter-pour timing: wait for bed to run dry
+  between each pour. Pour structure: 40g / 80g / 90g / 90g (2 pours in 60% phase = lighter body).
+  Tuning: bed dry well before 45s → 2 clicks finer; bed not dry in time → 2 clicks coarser.
 
 ### Ineffable Boku Snap Anaerobic 72h — Ethiopia Guji
 - Variety: Heirloom / Natural Anaerobic 72h / 2350m
