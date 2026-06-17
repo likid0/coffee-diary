@@ -1,0 +1,296 @@
+:root {
+  --bg: #f7f2ea;
+  --card: #ffffff;
+  --ink: #2a1d14;
+  --muted: #7a6a5d;
+  --line: #e8ddd0;
+  --accent: #8a5a3b;
+  --accent-ink: #ffffff;
+  --status-dialed: #2f8f4e;
+  --status-dialling: #c2790f;
+  --status-resting: #4f7396;
+  --status-not-started: #8a8a8a;
+  --status-finished: #9c9389;
+  --radius: 12px;
+  --shadow: 0 1px 2px rgba(42, 29, 20, 0.06), 0 4px 16px rgba(42, 29, 20, 0.05);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(247, 242, 234, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 20px 0;
+}
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 1100px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+.brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.search {
+  flex: 1;
+  min-width: 220px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 0.95rem;
+  outline: none;
+}
+.search:focus { border-color: var(--accent); }
+.notes-link {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+  padding: 6px 4px;
+}
+.notes-link:hover { text-decoration: underline; }
+
+.filters {
+  max-width: 1100px;
+  margin: 10px auto 0;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+}
+.chip-group {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-right: 14px;
+}
+.chip-group-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin-right: 4px;
+}
+.chip {
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 0.82rem;
+  cursor: pointer;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.chip:hover { border-color: var(--accent); }
+.chip.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+main { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+.section-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 28px 0 12px;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.section-title .count {
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.section-title:first-child { margin-top: 4px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(42, 29, 20, 0.1), 0 10px 24px rgba(42, 29, 20, 0.08);
+}
+
+.card-photo {
+  height: 140px;
+  background: linear-gradient(135deg, #d8b48a, #8a5a3b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+  color: #fff;
+  font-weight: 700;
+  overflow: hidden;
+}
+.card-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+.card-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+
+.card-name { font-weight: 700; font-size: 1rem; line-height: 1.25; }
+.card-roaster { font-size: 0.8rem; color: var(--muted); }
+.card-meta { font-size: 0.78rem; color: var(--muted); }
+
+.badges { display: flex; gap: 6px; flex-wrap: wrap; margin: 2px 0; }
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: #fff;
+}
+.badge.dialed { background: var(--status-dialed); }
+.badge.dialling_in { background: var(--status-dialling); }
+.badge.resting { background: var(--status-resting); }
+.badge.not_started { background: var(--status-not-started); }
+.badge.finished { background: var(--status-finished); }
+.badge.method { background: #efe3d3; color: var(--accent); }
+
+.recipe-snippet {
+  margin-top: 4px;
+  font-size: 0.78rem;
+  background: #faf6f0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #4a3a2c;
+  line-height: 1.45;
+}
+.recipe-snippet b { color: var(--ink); }
+
+.empty-state {
+  text-align: center;
+  color: var(--muted);
+  padding: 40px 0;
+}
+
+/* detail view */
+.detail-back {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.detail-hero {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+.detail-photo {
+  width: 180px;
+  height: 180px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #d8b48a, #8a5a3b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: #fff;
+  font-weight: 700;
+}
+.detail-photo img { width: 100%; height: 100%; object-fit: cover; }
+.detail-info { flex: 1; min-width: 240px; }
+.detail-info h1 { margin: 0 0 4px; font-size: 1.5rem; }
+.detail-sub { color: var(--muted); margin-bottom: 10px; }
+.detail-table { font-size: 0.85rem; border-collapse: collapse; }
+.detail-table td { padding: 2px 10px 2px 0; vertical-align: top; }
+.detail-table td:first-child { color: var(--muted); white-space: nowrap; }
+
+.recipe-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-bottom: 24px; }
+.recipe-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+}
+.recipe-card h3 { margin: 0 0 8px; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+.recipe-card .params { font-size: 0.85rem; }
+.recipe-card .params div { display: flex; justify-content: space-between; padding: 2px 0; border-bottom: 1px dashed var(--line); }
+.recipe-card .params div:last-child { border-bottom: none; }
+.recipe-card .params .k { color: var(--muted); }
+.recipe-card .source-tag { font-size: 0.7rem; color: var(--muted); margin-top: 8px; }
+
+.body-md { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 20px; box-shadow: var(--shadow); margin-bottom: 24px; font-size: 0.92rem; line-height: 1.6; }
+.body-md h2 { font-size: 1rem; margin-top: 20px; }
+.body-md h2:first-child { margin-top: 0; }
+.body-md table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+.body-md th, .body-md td { border: 1px solid var(--line); padding: 4px 8px; text-align: left; }
+
+.timeline { display: flex; flex-direction: column; gap: 10px; }
+.tl-item {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 10px 14px;
+  box-shadow: var(--shadow);
+}
+.tl-item.result-dialed { border-left-color: var(--status-dialed); }
+.tl-item.result-bad { border-left-color: #c0392b; }
+.tl-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 0.85rem; flex-wrap: wrap; }
+.tl-date { font-weight: 700; }
+.tl-result { font-size: 0.78rem; color: var(--muted); }
+.tl-params { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+.tl-body { font-size: 0.85rem; margin-top: 8px; line-height: 1.55; }
+.tl-body p:first-child { margin-top: 0; }
+.tl-toggle { cursor: pointer; color: var(--accent); font-size: 0.78rem; font-weight: 600; margin-top: 6px; display: inline-block; }
+.tl-body.hidden { display: none; }
+
+.footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.75rem;
+  padding: 30px 20px 50px;
+}
+
+@media (max-width: 560px) {
+  .detail-hero { flex-direction: column; }
+  .detail-photo { width: 100%; height: 160px; }
+}
