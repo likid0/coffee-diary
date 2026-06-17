@@ -18,8 +18,9 @@ brew_methods: [espresso, filter]
 ## Notes
 
 Dual-use roast. Decaf extracts differently — cell structure compromised by decaf process.
-Best result so far: grind 4 + 15s pre-infusion + 44g out / 32s.
-Still lacks sweetness — try 94–95°C and wait until day 14–16 from roast for peak.
+Best result so far: grind 3 + 15s pre-infusion + 44g out / 32s, served as Americano
+(44g espresso + 110ml hot water, 1:2.5). Saltiness now background only, sweetness emerging.
+Next: try 94°C at grind 3 to fully eliminate saltiness and unlock sweetness.
 
 ## vs previous decafs
 
@@ -28,10 +29,11 @@ Ineffable Swiss Water Decaf (grind 11) — different process, different density.
 
 ## Starting parameters (espresso)
 
-Grind: 4
+Grind: 3
 Pre-infusion: 15s
 Dose: 20g in / 44g out / ~32s
-Temp: 93–95°C
+Temp: 93–94°C
+Serve: Americano 1:2.5 (44g espresso + 110ml hot water)
 
 ## Starting parameters (filter)
 
