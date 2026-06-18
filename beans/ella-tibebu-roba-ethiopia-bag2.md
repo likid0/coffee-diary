@@ -11,6 +11,7 @@ roast_date: 2026-06-09
 bag_size_g: ~
 tasting_notes: Fresas con nata, melocotón, floral
 status: resting
+rest_until: 2026-06-19
 brew_methods: [espresso]
 ---
 

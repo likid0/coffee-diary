@@ -332,6 +332,17 @@ for (const bean of beans) {
   bean.rotationStatus = status;
 }
 
+// ---- rest-until date (explicit frontmatter, falling back to "Rest until: YYYY-MM-DD" in body text) ----
+for (const bean of beans) {
+  if (bean.rotationStatus !== "resting") continue;
+  if (bean.frontmatter.rest_until) {
+    bean.restUntil = bean.frontmatter.rest_until;
+    continue;
+  }
+  const match = bean.bodyMd.match(/rest(?:ing)?\s+until:?\s*~?(\d{4}-\d{2}-\d{2})/i);
+  bean.restUntil = match ? match[1] : null;
+}
+
 const data = {
   generatedAt: new Date().toISOString(),
   beans,

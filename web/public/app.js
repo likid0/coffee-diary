@@ -344,6 +344,15 @@ function daysSince(dateStr) {
   return Math.round((now - then) / 86400000);
 }
 
+function restUntilInfo(bean) {
+  if (bean.rotationStatus !== "resting" || !bean.restUntil) return null;
+  const daysLeft = -daysSince(bean.restUntil);
+  if (daysLeft <= 0) {
+    return { ready: true, label: `Ready to brew now (since ${bean.restUntil})` };
+  }
+  return { ready: false, label: `Ready to brew ${bean.restUntil} (in ${daysLeft} day${daysLeft === 1 ? "" : "s"})` };
+}
+
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
@@ -373,6 +382,7 @@ function beanCard(bean) {
   const methods = Object.keys(bean.recipes || {});
   const snippets = METHOD_ORDER.filter((m) => bean.recipes[m]).map((m) => recipeSnippetLine(m, bean.recipes[m])).join("");
   const metaParts = [bean.frontmatter.origin, bean.frontmatter.processing].filter(Boolean);
+  const rest = restUntilInfo(bean);
   return `
   <a class="card" href="#/bean/${bean.slug}">
     <div class="card-photo">${beanPhotoEl(bean)}</div>
@@ -384,6 +394,7 @@ function beanCard(bean) {
         <span class="badge ${bean.rotationStatus}">${STATUS_ICON[bean.rotationStatus]} ${STATUS_LABELS[bean.rotationStatus]}</span>
         ${methods.map((m) => `<span class="badge method">${METHOD_LABELS[m]}</span>`).join("")}
       </div>
+      ${rest ? `<div class="rest-info ${rest.ready ? "ready" : ""}">${rest.ready ? "✅" : "⏳"} ${escapeHtml(rest.label)}</div>` : ""}
       ${snippets ? `<div class="recipe-snippet">${snippets}</div>` : ""}
     </div>
   </a>`;
@@ -546,6 +557,10 @@ function renderBeanDetail(slug) {
           <span class="badge ${bean.rotationStatus}">${STATUS_ICON[bean.rotationStatus]} ${STATUS_LABELS[bean.rotationStatus]}</span>
           ${bean.dialedTags.map((t) => `<span class="badge dialed">🏆 ${t.tag.replace("dialed/", "")}</span>`).join("")}
         </div>
+        ${(() => {
+          const rest = restUntilInfo(bean);
+          return rest ? `<div class="rest-info ${rest.ready ? "ready" : ""}">${rest.ready ? "✅" : "⏳"} ${escapeHtml(rest.label)}</div>` : "";
+        })()}
         <table class="detail-table">
           ${infoRows.map(([k, v]) => `<tr><td>${k}</td><td>${escapeHtml(String(v))}</td></tr>`).join("")}
         </table>

@@ -13,6 +13,7 @@ roast_date: 2026-06-08
 bag_size_g: 250
 tasting_notes: Cereza confitada, albaricoque, gominola
 status: resting
+rest_until: 2026-06-22
 brew_methods: [filter]
 ---
 
