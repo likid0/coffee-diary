@@ -283,6 +283,70 @@ main { max-width: 1100px; margin: 0 auto; padding: 20px; }
 .tl-toggle { cursor: pointer; color: var(--accent); font-size: 0.78rem; font-weight: 600; margin-top: 6px; display: inline-block; }
 .tl-body.hidden { display: none; }
 
+.brew-helper {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
+.bh-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: end;
+  margin-bottom: 10px;
+}
+.bh-controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+.bh-controls select,
+.bh-controls input {
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  background: #fff;
+  color: var(--ink);
+  min-width: 90px;
+}
+.bh-controls label.hidden { display: none; }
+.bh-grind {
+  font-size: 0.85rem;
+  background: #faf6f0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+}
+.bh-result {
+  font-size: 0.92rem;
+  margin-bottom: 10px;
+}
+.bh-schedule {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+.bh-schedule th,
+.bh-schedule td {
+  border: 1px solid var(--line);
+  padding: 5px 10px;
+  text-align: left;
+}
+.bh-schedule th { background: #faf6f0; }
+.bh-hint {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
 .footer {
   text-align: center;
   color: var(--muted);

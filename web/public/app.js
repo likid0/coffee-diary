@@ -58,6 +58,279 @@ const FIELD_UNITS = {
 let DATA = null;
 const state = { query: "", method: "all", status: "active" };
 
+// ---------------- Brew Helper ----------------
+
+function ratioToNumber(ratioStr) {
+  if (ratioStr === undefined || ratioStr === null) return null;
+  const m = String(ratioStr).match(/1\s*:\s*(\d+\.?\d*)/);
+  return m ? parseFloat(m[1]) : null;
+}
+
+function ratioPresetsFor(method) {
+  return method === "espresso" ? [1.8, 2, 2.2, 2.5] : [14, 15, 16, 17];
+}
+
+function processTypeForBean(bean) {
+  const processing = (bean.frontmatter.processing || "").toLowerCase();
+  const origin = (bean.frontmatter.origin || "").toLowerCase();
+  const altitude = parseFloat(String(bean.frontmatter.altitude_masl || "").split(/[-~]/)[0]) || 0;
+  if (/anaerobic/.test(processing)) return "Anaerobic natural";
+  if (origin === "ethiopia" && altitude >= 1700) return "High altitude Ethiopian";
+  if (origin === "brazil" && /natural/.test(processing)) return "Brazilian natural";
+  if (origin === "rwanda" && /natural/.test(processing)) return "Natural Rwandan";
+  if (/natural/.test(processing)) return "Natural light roast";
+  if (/washed/.test(processing)) return "Washed light roast";
+  return null;
+}
+
+function scaleQToComandante(qVal, multiplier) {
+  const str = String(qVal);
+  if (str.includes("-")) {
+    const [a, b] = str.split("-").map(Number);
+    return `${Math.round(a / multiplier)}-${Math.round(b / multiplier)}`;
+  }
+  const n = Number(str.replace(/[^0-9.]/g, ""));
+  return Math.round(n / multiplier);
+}
+
+function grindRecommendation(bean, method) {
+  const gc = DATA.grinderConversion;
+  if (!gc) return null;
+  const recipe = bean.recipes[method];
+  if (recipe && recipe.params && recipe.params.grind_clicks !== undefined) {
+    const q = recipe.params.grind_clicks;
+    return {
+      source: recipe.source,
+      q,
+      comandante: scaleQToComandante(q, gc.multiplier),
+    };
+  }
+  const process = processTypeForBean(bean);
+  const row = gc.processStartingPoints.find((p) => p.process === process);
+  if (row) {
+    return { source: "process-type", process, q: row.q, comandante: row.comandante, notes: row.notes };
+  }
+  return null;
+}
+
+function buildCumulative(steps) {
+  let running = 0;
+  for (const s of steps) {
+    if (s.g) {
+      running += s.g;
+      s.cumulative = running;
+    }
+  }
+  return steps;
+}
+
+function kasuyaRecipe({ totalWaterG, body }) {
+  const phase1 = totalWaterG * 0.4;
+  const phase2 = totalWaterG * 0.6;
+  const p1a = Math.round(phase1 / 2);
+  const p1b = Math.round(phase1 - p1a);
+  const steps = [
+    { time: "0:00", action: "Pour 1", g: p1a },
+    { time: "0:45", action: "Pour 2 (bed should be flattening)", g: p1b },
+  ];
+  if (body === "full") {
+    const each = Math.round(phase2 / 3);
+    steps.push({ time: "1:30", action: "Pour 3", g: each });
+    steps.push({ time: "2:00", action: "Pour 4", g: each });
+    steps.push({ time: "2:30", action: "Pour 5", g: phase2 - each * 2 });
+    steps.push({ time: "~4:00", action: "Target drawdown complete", g: 0 });
+  } else {
+    const each = Math.round(phase2 / 2);
+    steps.push({ time: "1:30", action: "Pour 3", g: each });
+    steps.push({ time: "2:15", action: "Pour 4", g: phase2 - each });
+    steps.push({ time: "~3:30", action: "Target drawdown complete", g: 0 });
+  }
+  return buildCumulative(steps);
+}
+
+function switchHybridRecipe({ totalWaterG, variant }) {
+  if (variant === "no-bloom") {
+    const half = Math.round(totalWaterG / 2);
+    return buildCumulative([
+      { time: "0:00", action: "Pour directly (no bloom), switch OPEN", g: half },
+      { time: "0:45–0:50", action: "CLOSE switch, pour remaining", g: totalWaterG - half },
+      { time: "~1:15", action: "Immersion begins (switch closed)", g: 0 },
+      { time: "2:00–2:05", action: "OPEN switch → drawdown", g: 0 },
+      { time: "~2:45–2:50", action: "Target drawdown complete", g: 0 },
+    ]);
+  }
+  const bloom = Math.round(totalWaterG * (50 / 300));
+  const secondTarget = Math.round(totalWaterG * (115 / 300));
+  const secondPour = secondTarget - bloom;
+  const remainder = totalWaterG - secondTarget;
+  return buildCumulative([
+    { time: "0:00", action: "Bloom pour, switch OPEN", g: bloom },
+    { time: "0:45", action: "Pour (still open / percolating)", g: secondPour },
+    { time: "1:15", action: "CLOSE switch, pour remainder (immersion begins)", g: remainder },
+    { time: "2:00–2:30", action: "Immersion closed — extend toward 2:30 for more development", g: 0 },
+    { time: "2:00–2:30", action: "OPEN switch → drawdown", g: 0 },
+    { time: "~3:15–3:40", action: "Target drawdown complete", g: 0 },
+  ]);
+}
+
+function grindPanelHtml(grind) {
+  if (!grind) {
+    return `<div class="bh-grind">No grind data yet for this process type — use judgement, Comandante 25–27 is a generic light-roast starting point.</div>`;
+  }
+  const labels = {
+    dialed: "🏆 Your dialed-in setting",
+    "latest-session": "Your latest attempt",
+    "process-type": `Suggested by process type${grind.process ? ` (${grind.process})` : ""}`,
+  };
+  return `<div class="bh-grind"><b>${labels[grind.source]}:</b> 1Zpresso Q <b>${grind.q}</b> clicks · Comandante ≈ <b>${grind.comandante}</b> clicks${grind.notes ? ` — ${escapeHtml(grind.notes)}` : ""}</div>`;
+}
+
+function pourScheduleHtml(steps) {
+  const rows = steps
+    .map((s) => `<tr><td>${s.time}</td><td>${escapeHtml(s.action)}</td><td>${s.g ? `+${s.g}g` : ""}</td><td>${s.cumulative ? `${s.cumulative}g` : ""}</td></tr>`)
+    .join("");
+  return `
+    <table class="bh-schedule">
+      <thead><tr><th>Time</th><th>Action</th><th>Pour</th><th>Total</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div class="bh-hint">Pour when the bed flattens / runs dry rather than strictly by the clock — times are a guide.</div>`;
+}
+
+function renderBrewHelper(bean) {
+  const defaultMethod = METHOD_ORDER.find((m) => bean.recipes[m]) || "v60";
+  return `
+    <div class="section-title">🧮 Brew helper</div>
+    <div class="brew-helper" id="brew-helper">
+      <div class="bh-controls">
+        <label>Method
+          <select id="bh-method">
+            ${METHOD_ORDER.map((m) => `<option value="${m}" ${m === defaultMethod ? "selected" : ""}>${METHOD_LABELS[m]}</option>`).join("")}
+          </select>
+        </label>
+        <label>Dose (g) <input id="bh-dose" type="number" step="0.1" min="1" /></label>
+        <label>Ratio
+          <select id="bh-ratio"></select>
+        </label>
+        <label id="bh-ratio-custom-wrap" class="hidden">Custom ratio <input id="bh-ratio-custom" type="number" step="0.1" min="1" placeholder="e.g. 16.5" /></label>
+        <label>Temp (°C) <input id="bh-temp" type="number" step="0.5" /></label>
+      </div>
+      <div class="bh-controls" id="bh-template-wrap">
+        <label>Recipe
+          <select id="bh-template">
+            <option value="kasuya">Tetsu Kasuya 4:6</option>
+            <option value="switch-bloom">Switch Hybrid (with bloom)</option>
+            <option value="switch-nobloom">Switch Hybrid (no bloom)</option>
+          </select>
+        </label>
+        <label id="bh-body-wrap">Body
+          <select id="bh-body">
+            <option value="light">Light (2 pours)</option>
+            <option value="full">Full (3 pours)</option>
+          </select>
+        </label>
+      </div>
+      <div id="bh-output"></div>
+    </div>`;
+}
+
+function initBrewHelper(bean) {
+  const root = document.getElementById("brew-helper");
+  if (!root) return;
+  const els = {
+    method: root.querySelector("#bh-method"),
+    dose: root.querySelector("#bh-dose"),
+    ratio: root.querySelector("#bh-ratio"),
+    ratioCustomWrap: root.querySelector("#bh-ratio-custom-wrap"),
+    ratioCustom: root.querySelector("#bh-ratio-custom"),
+    template: root.querySelector("#bh-template"),
+    templateWrap: root.querySelector("#bh-template-wrap"),
+    body: root.querySelector("#bh-body"),
+    bodyWrap: root.querySelector("#bh-body-wrap"),
+    temp: root.querySelector("#bh-temp"),
+    output: root.querySelector("#bh-output"),
+  };
+
+  function populateRatioOptions(method, selectedRatio) {
+    const presets = ratioPresetsFor(method);
+    const matched = selectedRatio && presets.includes(selectedRatio);
+    els.ratio.innerHTML =
+      presets.map((r) => `<option value="${r}" ${r === selectedRatio ? "selected" : ""}>1:${r}</option>`).join("") +
+      `<option value="custom" ${!matched && selectedRatio ? "selected" : ""}>Custom</option>`;
+    if (!matched && selectedRatio) {
+      els.ratioCustom.value = selectedRatio;
+      els.ratioCustomWrap.classList.remove("hidden");
+    } else {
+      els.ratioCustomWrap.classList.add("hidden");
+    }
+  }
+
+  function applyDefaultsForMethod(method) {
+    const recipe = bean.recipes[method];
+    let dose = method === "espresso" ? 20 : 20;
+    let ratio = method === "espresso" ? 2.2 : 15;
+    let temp = method === "espresso" ? 93 : 92;
+    if (recipe && recipe.params) {
+      dose = recipe.params.dose_g ?? recipe.params.dose_in_g ?? dose;
+      temp = recipe.params.temp_c ?? temp;
+      const rFromField = ratioToNumber(recipe.params.ratio);
+      if (rFromField) {
+        ratio = rFromField;
+      } else if (method === "espresso" && recipe.params.dose_in_g && recipe.params.dose_out_g) {
+        ratio = Math.round((recipe.params.dose_out_g / recipe.params.dose_in_g) * 100) / 100;
+      }
+    }
+    els.dose.value = dose;
+    els.temp.value = temp;
+    populateRatioOptions(method, ratio);
+  }
+
+  function toggleMethodSpecificControls() {
+    const isEspresso = els.method.value === "espresso";
+    els.templateWrap.style.display = isEspresso ? "none" : "";
+  }
+
+  function currentRatio() {
+    return els.ratio.value === "custom" ? parseFloat(els.ratioCustom.value || "0") : parseFloat(els.ratio.value);
+  }
+
+  function recompute() {
+    const method = els.method.value;
+    const dose = parseFloat(els.dose.value) || 0;
+    const ratio = currentRatio();
+    const grind = grindRecommendation(bean, method);
+    let html = grindPanelHtml(grind);
+    if (method === "espresso") {
+      const yieldG = Math.round(dose * ratio * 10) / 10;
+      html += `<div class="bh-result"><b>${dose}g</b> in → <b>${yieldG}g</b> out (1:${ratio}) at ${els.temp.value}°C</div>`;
+    } else {
+      const waterG = Math.round(dose * ratio);
+      html += `<div class="bh-result"><b>${dose}g</b> dose · <b>${waterG}g</b> water (1:${ratio}) at ${els.temp.value}°C</div>`;
+      const steps =
+        els.template.value === "kasuya"
+          ? kasuyaRecipe({ totalWaterG: waterG, body: els.body.value })
+          : switchHybridRecipe({ totalWaterG: waterG, variant: els.template.value === "switch-nobloom" ? "no-bloom" : "bloom" });
+      html += pourScheduleHtml(steps);
+    }
+    els.output.innerHTML = html;
+  }
+
+  els.method.addEventListener("change", () => {
+    applyDefaultsForMethod(els.method.value);
+    toggleMethodSpecificControls();
+    recompute();
+  });
+  els.ratio.addEventListener("change", () => {
+    els.ratioCustomWrap.classList.toggle("hidden", els.ratio.value !== "custom");
+    recompute();
+  });
+  [els.dose, els.ratioCustom, els.template, els.body, els.temp].forEach((el) => el.addEventListener("input", recompute));
+
+  applyDefaultsForMethod(els.method.value);
+  toggleMethodSpecificControls();
+  recompute();
+}
+
 function fmtVal(key, val) {
   if (val === undefined || val === null) return "";
   const unit = FIELD_UNITS[key] || "";
@@ -281,10 +554,13 @@ function renderBeanDetail(slug) {
 
     ${recipeCards ? `<div class="section-title">Current recipe</div><div class="recipe-cards">${recipeCards}</div>` : ""}
 
+    ${renderBrewHelper(bean)}
+
     ${bean.notesBodyHtml.trim() ? `<div class="section-title">Notes</div><div class="body-md">${bean.notesBodyHtml}</div>` : ""}
 
     ${sessions.length ? `<div class="section-title">Session history <span class="count">${sessions.length}</span></div><div class="timeline">${sessions.map(timelineItem).join("")}</div>` : ""}
   `;
+  initBrewHelper(bean);
 }
 
 function renderNotesList() {

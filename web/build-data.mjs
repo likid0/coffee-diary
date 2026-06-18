@@ -17,10 +17,22 @@ function slugify(s) {
     .replace(/^-+|-+$/g, "");
 }
 
+// js-yaml auto-parses unquoted YAML dates into Date objects; flatten them back
+// to plain YYYY-MM-DD strings so JSON.stringify doesn't turn them into full
+// ISO timestamps (which broke client-side "days since roast" math).
+function sanitizeDates(value) {
+  if (value instanceof Date) return value.toISOString().slice(0, 10);
+  if (Array.isArray(value)) return value.map(sanitizeDates);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, sanitizeDates(v)]));
+  }
+  return value;
+}
+
 function readMd(absPath) {
   const raw = fs.readFileSync(absPath, "utf8");
   const { data, content } = matter(raw);
-  return { frontmatter: data, bodyMd: content.trim(), bodyHtml: marked.parse(content.trim()) };
+  return { frontmatter: sanitizeDates(data), bodyMd: content.trim(), bodyHtml: marked.parse(content.trim()) };
 }
 
 function listMdFiles(dir) {
@@ -94,11 +106,65 @@ for (const [method, dir] of Object.entries(methodDirs)) {
 sessions.sort((a, b) => (a.date && b.date ? a.date.localeCompare(b.date) : 0));
 
 // ---- notes ----
+function parseMarkdownTables(bodyMd) {
+  const lines = bodyMd.split("\n");
+  const tables = [];
+  for (let i = 0; i < lines.length - 1; i++) {
+    const headerLine = lines[i].trim();
+    const sepLine = lines[i + 1].trim();
+    if (!headerLine.startsWith("|") || !/^\|?[\s:|-]+\|?$/.test(sepLine) || !sepLine.includes("-")) continue;
+    const headers = headerLine.split("|").map((c) => c.trim()).filter((c) => c !== "");
+    const rows = [];
+    let j = i + 2;
+    for (; j < lines.length; j++) {
+      const rowLine = lines[j].trim();
+      if (!rowLine.startsWith("|")) break;
+      const cells = rowLine.split("|").map((c) => c.trim()).filter((_, idx, arr) => !(idx === 0 && arr[0] === "") && !(idx === arr.length - 1 && arr[arr.length - 1] === ""));
+      const row = {};
+      headers.forEach((h, idx) => (row[h] = cells[idx] ?? ""));
+      rows.push(row);
+    }
+    tables.push({ headers, rows });
+    i = j;
+  }
+  return tables;
+}
+
+function parseGrinderConversion(frontmatter, bodyMd) {
+  if (frontmatter.multiplier === undefined) return null;
+  const tables = parseMarkdownTables(bodyMd);
+  const conversionTable = (tables[0]?.rows || []).map((r) => ({
+    comandante: Number(r["Comandante"]),
+    q: Number(String(r["1Zpresso Q"]).replace(/[^0-9.]/g, "")),
+    calibration: /calibration/i.test(r["1Zpresso Q"] || ""),
+  }));
+  const processStartingPoints = (tables[1]?.rows || []).map((r) => ({
+    process: r["Process"],
+    comandante: r["Comandante"],
+    q: r["1Zpresso Q"],
+    notes: r["Notes"],
+  }));
+  return {
+    multiplier: frontmatter.multiplier,
+    calibrationPoint: frontmatter.calibration_point,
+    conversionTable,
+    processStartingPoints,
+  };
+}
+
 const notes = listMdFiles("notes").map((relPath) => {
   const abs = path.join(repoRoot, relPath);
   const { frontmatter, bodyMd, bodyHtml } = readMd(abs);
-  return { slug: path.basename(relPath, ".md"), frontmatter, bodyMd, bodyHtml, sourceFile: relPath };
+  return {
+    slug: path.basename(relPath, ".md"),
+    frontmatter,
+    bodyMd,
+    bodyHtml,
+    sourceFile: relPath,
+    grinderConversion: parseGrinderConversion(frontmatter, bodyMd),
+  };
 });
+const grinderConversion = notes.find((n) => n.grinderConversion)?.grinderConversion || null;
 
 // ---- dialed tags -> resolve to tagged session file ----
 let tagNames = [];
@@ -272,6 +338,7 @@ const data = {
   sessions,
   notes,
   dialedTags,
+  grinderConversion,
 };
 
 fs.mkdirSync(path.join(__dirname, "public"), { recursive: true });
